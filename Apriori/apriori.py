@@ -13,17 +13,12 @@ import time
 
 
 def support(args,data):
-    """   
-    TO UPGRADE 
-   
-    """
     sup = 0    
     for i in range(data.shape[0]):
-        row = []
+        row = 1
         for arg in args:
-            row.append(data[i][arg-1])        
-        if all(list(map(lambda x: x == 1,row))):
-            sup+=1        
+            row *= data[i,arg-1]        
+        sup+=row     
     return sup
 
 def determine_rules(frequent_sets):  
@@ -138,7 +133,6 @@ def process_data(data):
             result[data[0][i]] = data[1][i]
     return result
 
-
 def apriori(data,minSupport,minConvidance):
     start_time = time.time()
     [sets,supports] = determine_sets(data,minSupport)    
@@ -170,9 +164,9 @@ def apriori(data,minSupport,minConvidance):
     print("Processing time : ",round(time.time()-start_time,2),' s')
     print("Amount of frequent sets: ",len(final_rules))
     
-
-
 if __name__ == "__main__":
     reuters = sio.loadmat('reuters.mat')
-    reuters = reuters['TOPICS'][:1000,:]
+    reuters = reuters['TOPICS'][:10000,:]
     apriori(reuters,15,0.6)
+
+    
