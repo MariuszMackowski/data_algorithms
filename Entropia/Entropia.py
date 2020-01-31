@@ -118,11 +118,11 @@ def load_data(name):
     return [X,d,names]
         
 if __name__ == "__main__":
-    files = ['contact-lenses.arff','zoo.arff','reuters.mat']
+    files = ['contact-lenses.arff','zoo.arff','reuters.mat'] #files to process
     n = [2,7,20] #NUMBERS OF TRAITS TO CHOOSE
     for p in range(0,len(files)):
         print('###############')
-        print('Plik',files[p].split('.')[0])
+        print('File ',files[p].split('.')[0])
         [X,d,names] = load_data(files[p]) #GET DATA            
         atr = select_atr(X,d,n[p])
         atrn = atr[0]
@@ -131,7 +131,7 @@ if __name__ == "__main__":
         #PRINT RESULTS
         for i in range(0,len(atr)):            
             print('id:',atr[i][0],' name: ',names[atr[i][0]],' Info Gain: ',round(atr[i][1],6))
-        print('\nWybrane zmienne dla pliku: ',files[p].split('.')[0])
+        print('\nChosen attributes for file: ',files[p].split('.')[0])
         for i in range(0,len(atrn)):
             print(atrn[i][0],names[atr[i][0]])
         
