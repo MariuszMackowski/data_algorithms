@@ -15,8 +15,8 @@ import random
 
 if __name__ == "__main__":
     # READ AND PREPARE DATA FROM FILE
-#    data = arff.loadarff('waveform5000.arff')
-    data = arff.loadarff('iris.arff')
+    file = 'iris.arff'#'waveform5000.arff'
+    data = arff.loadarff(file)
     df = pd.DataFrame(data[0])
     X = np.array(df)
     X = X.astype('U13')
@@ -36,23 +36,23 @@ if __name__ == "__main__":
     C = np.cov(np.transpose(X))
     l, p = np.linalg.eig(C)
     for i in range(0,len(l)):
-        print('Wartosc'+str(i)+': '+ str(l[i]))
+        print('Value '+str(i)+': '+ str(l[i]))
     sorted_order = np.argsort(l)    
     p_sorted = p[:,sorted_order[::-1]]
     
-    nowyX = np.dot(X,p_sorted)
+    newX = np.dot(X,p_sorted)
     
     
     fig = plt.figure()
     for clas in arg:        
         x = np.array(arg[clas])        
-        plt.plot(nowyX[x,0],nowyX[x,1],'.')
+        plt.plot(newX[x,0],newX[x,1],'.')
         
     fig = plt.figure()
     ax = fig.gca( projection = '3d')
     for clas in arg:
         x = np.array(arg[clas])            
-        ax.plot(nowyX[x,0],nowyX[x,1],nowyX[x,2],'.')
+        ax.plot(newX[x,0],newX[x,1],newX[x,2],'.')
     
 
     rnd = list(range(0,X.shape[1]))
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     for clas in arg:
         x = np.array(arg[clas]) 
         plt.plot(X[x,rnd[0]],X[x,rnd[1]],'.')
-        plt.title('Wczytane dane na wymiarach: '+str(rnd[0])+'\\'+str(rnd[1]))
+        plt.title('Data on axis: '+str(rnd[0])+'\\'+str(rnd[1]))
         
     random.shuffle(rnd)
     
@@ -72,6 +72,6 @@ if __name__ == "__main__":
     ax = fig.gca( projection = '3d')
     for clas in arg:
         x = np.array(arg[clas])
-        ax.plot(nowyX[x,rnd[0]],nowyX[x,rnd[1]],nowyX[x,rnd[2]],'.')
-        plt.title('Wczytane dane na wymiarach: '+str(rnd[0])+'\\'+str(rnd[1])+'\\'+str(rnd[2]))
+        ax.plot(newX[x,rnd[0]],newX[x,rnd[1]],newX[x,rnd[2]],'.')
+        plt.title('Data on axi: '+str(rnd[0])+'\\'+str(rnd[1])+'\\'+str(rnd[2]))
     plt.show()    
